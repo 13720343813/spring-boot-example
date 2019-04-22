@@ -1,0 +1,7 @@
+CREATE TABLE `tb_task` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(1000) DEFAULT NULL,
+  `task` varchar(1000) DEFAULT NULL,
+  `cron` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8

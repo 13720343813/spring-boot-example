@@ -16,6 +16,5 @@ public class SimpleScheduleConfig {
     public Trigger simpleTrigger() {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(15).repeatForever();
         return TriggerBuilder.newTrigger().withIdentity("simpleTrigger").forJob(simpleJobBeanDetails()).withSchedule(scheduleBuilder).build();
-
     }
 }

@@ -37,8 +37,8 @@ public class ScheduleTaskManageController {
     @Autowired
     private ScheduleTaskConfigService scheduleTaskConfigService;
 
-    @RequestMapping("start")
-    public String startScheduleTask() {
+    public void _init(){
+        System.out.println("++++++++++++init++++++++++++++++");
         List<ScheduleTaskConfig> scheduleTaskConfigs = scheduleTaskConfigService.fetchList();
         if (!CollectionUtils.isEmpty(scheduleTaskConfigs)) {
             for (ScheduleTaskConfig scheduleTaskConfig : scheduleTaskConfigs) {
@@ -61,18 +61,26 @@ public class ScheduleTaskManageController {
                 scheduledFutureMap.put(scheduleTaskConfig.getId(), future);
             }
         }
-        return "success";
     }
-
-    @RequestMapping("stop")
-    public String stopScheduleTask() {
+    public void _destory(){
+        System.out.println("++++++++++++++++destory++++++++++++");
         if (scheduledFutureMap != null && !scheduledFutureMap.isEmpty()) {
             for (Integer key : scheduledFutureMap.keySet()) {
                 System.out.println("scheduledFutureMap :" + key);
                 scheduledFutureMap.get(key).cancel(true);
             }
-            scheduledFutureMap.clear();
         }
+        scheduledFutureMap.clear();
+    }
+    @RequestMapping("start")
+    public String startScheduleTask() {
+        _init();
+        return "success";
+    }
+
+    @RequestMapping("stop")
+    public String stopScheduleTask() {
+        _destory();
         return "success";
     }
 }

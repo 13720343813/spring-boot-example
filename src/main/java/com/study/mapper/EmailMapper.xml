@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.mapper.EmailMapper">
+    <resultMap id="emailResultMap" type="com.study.orm.Email">
+        <id property="id" column="id"></id>
+        <result property="sendEmail" column="send_email"></result>
+        <result property="receiveEmail" column="receive_email"></result>
+        <result property="subject" column="subject"></result>
+        <result property="content" column="content"></result>
+        <result property="emailStatus" column="email_status"></result>
+    </resultMap>
+
+    <select id="fetchList" parameterType="java.util.Map" resultMap="emailResultMap">
+        select * from email where 1=1
+        <include refid="queryCondition"></include>
+    </select>
+
+    <select id="fetchNextId" resultType="Integer">
+        select IFNULL(max(id)+1,1) from email;
+    </select>
+
+    <insert id="insert" parameterType="com.study.orm.Email">
+      insert into email(id,send_email,receive_email,subject,content,email_status)
+      values (#{id},#{sendEmail},#{receiveEmail},#{subject},#{content},#{emailStatus})
+    </insert>
+
+    <update id="update" parameterType="java.util.Map">
+        update email
+        <trim prefix="set" suffixOverrides=",">
+            <if test="sendEmail != null">
+                send_email = #{sendEmail}
+            </if>
+            <if test="receiveEmail != null">
+                receive_email = #{receiveEmail}
+            </if>
+            <if test="subject != null">
+                subject = #{subject}
+            </if>
+            <if test="content != null">
+                content = #{content}
+            </if>
+            <if test="emailStatus != null">
+                email_status = #{emailStatus}
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <sql id="queryCondition">
+        <if test="sendEmail != null ">
+            and send_email = #{sendEmail}
+        </if>
+        <if test="receiveEmail != null">
+            and receive_email = #{receiveEmail}
+        </if>
+        <if test="emailStatus != null">
+            and email_status = #{emailStatus}
+        </if>
+    </sql>
+</mapper>

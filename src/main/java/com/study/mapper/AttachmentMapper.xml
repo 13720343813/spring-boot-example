@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.mapper.AttachmentMapper">
+    <resultMap id="attachmentResultMap" type="com.study.orm.Attachment">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="emailId" column="email_id"></result>
+    </resultMap>
+
+    <select id="fetchByEmailId" parameterType="int" resultMap="attachmentResultMap">
+        select * from attachment where email_id = #{emailId}
+    </select>
+
+    <insert id="insert" parameterType="com.study.orm.Attachment">
+        insert into attachment(name,email_id) values (#{name},#{emailId})
+    </insert>
+</mapper>
